@@ -1,108 +1,86 @@
-FOUNDER OUTREACH ASSISTANT
+# Founder Outreach
 
-A python based application for discovering relevant company founders, ranking prospects against defined criteria, preparing personalized LinkedIn outreach drafts and tracking outreach activity.
+A small FastAPI application for finding public founder profiles, reviewing and approving prospects, tracking outreach, and generating editable message drafts. Search results stay temporary until approved. The app never sends outreach messages automatically.
 
-The project is being developed incrementally using Python and FastAPI, with an emphasis on growing backend development expertise and building a maintanable application.
+## What it does
 
-Project Goals
+- Searches public pages with DDGS and filters results using founder-related signals.
+- Extracts a founder name and company from result titles and snippets.
+- Keeps search matches in the current browser page until you approve them.
+- Saves approved founders, outreach statuses, and drafts in SQLite.
+- Serves the frontend and JSON API from the same FastAPI application.
 
-• Discover potential founder prospects through an authorised professional-data API.
-• Filter and rank prospects according to defined criteria.
-• Save selected founder profiles according to defined criteria.
-• Generate personalised outreach message drafts using available profile and company information.
-• Track outreach activity, including invitations and replies.
-• Provde a simple interface for managing prospects.
+DDGS is an unofficial metasearch library. Result availability, rate limits, and snippet quality can vary. Search results need human review and do not prove a person's current role.
 
-PLANNED TECHNOLOGY STACK
+## Run locally
 
-Backend
+Requires Python 3.12 or newer.
 
-•Python (handles all backend)
-•FastAPI (application by which we make requests to the server)
-•Pydantic (data validation and parsing)
-•SQLAlchemy (database bridge)
-•Alembic (monitors migrations)
-• PostreSQL (database)
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+uvicorn main:app --reload
+```
 
-Frontend
+Open <http://127.0.0.1:8000/>. The API documentation is at <http://127.0.0.1:8000/docs>.
 
-•React
-•TypeScript
-•Tailwind CSS
+Run the automated checks locally with:
 
-Testing and Development
+```powershell
+pytest
+```
 
-•Pytest
-•Docker
-•Docker Compose
-•Git
+To run the suite inside the same Linux environment used by the container:
 
-External Data Provider
+```powershell
+docker build --target test -t founder-outreach-tests .
+docker run --rm founder-outreach-tests
+```
 
-Initial provider: DDGS web search library
+By default, local development creates `founders.db` beside the Python files. Set `FOUNDER_OUTREACH_DB_PATH` to use another SQLite file.
 
-the initial protoytpe uses the ddgs python package to discover publicly available web pages related to founders and companies.
+## Run in a container
 
-Search results provide titles, URLs, and snippets. The application will filter and rank results before presenting them for review.
+Requires Docker Desktop with Docker Compose.
 
-DDGS is an unofficial metasearch library, not dedicated professional-data API. search availabilty, rate limits, and result quality may vary.
+```powershell
+docker compose up --build -d
+```
 
-Contraints
-•No paid API subscription or bank card is required for the initial prototype
-•Validate search results before treating them as founder records
-•Do not assume a search result proves a person's role or current employment.
-•Don not scarpe restricted profile pages or automate LinkedIn invitations
-• Keep the search provider isolated so it can be replaced later
+Open <http://127.0.0.1:8000/>. Compose stores the database in a named volume, so approved founders and drafts survive container replacement. `docker compose down` stops the app and keeps the volume. `docker compose down -v` also deletes the saved database.
 
+To use a different local port, set `PORT` before starting Compose:
 
-ARCHITECTURE
+```powershell
+$env:PORT = "8080"
+docker compose up --build -d
+```
 
-The application will use a frontend-backend architecture.
+Then open <http://127.0.0.1:8080/>.
 
-1. Frontend: Allows the user to enter search criteria, review prospects, edit message drafts, and track outreach.
-2. Backend: Handles requests, validates data, applies ranking rules, generates message drafts, and coordinates data storage.
-3. Database: Stores founder records, search history, outreach drafts, and activity statuses.
-4. External data provider: Supplies professional profile and company information through an authorised API.
+The image runs as a non-root user, includes a health check, and runs the additive SQLite migration before starting Uvicorn. The local `founders.db` is intentionally excluded from the image and Git; a new container volume starts with an empty database. Back up the container database with:
 
-The frontend communicates with the backend through HTTP requests and JSON responses.The backend communicates with the database and external provider when needed.
+```powershell
+docker compose cp founder-outreach:/data/founders.db .\founders.db.backup
+```
 
-PLANNED WORKFLOW
+## Deployment considerations
 
-1. Enter founder search criteria
-2. Retrieve matching profiles from the data provider.
-3. Rank prospects using transparent. configurable rules.
-4. Review and save selected prospects.
-5. Generate personalised outreach drafts.
-6. Open profiles and send outreach manually.
-7. Record invitations, acceptances, replies, and follow-up activity.
+- The app has no user login or access control. Put authentication and HTTPS in front of it before exposing it beyond a trusted environment.
+- SQLite is suitable for a single app instance with a persistent writable disk. Do not run multiple replicas against a copied or ephemeral database. A multi-instance deployment should move to a managed database such as PostgreSQL and use a shared migration process.
+- The deployment platform must preserve `/data`. If it replaces the volume, the saved approvals, statuses, and drafts are lost.
+- DDGS depends on public search providers and is not a guaranteed professional-data feed. A deployment may see throttling or changes in results.
+- The app prepares drafts only. It does not send email, LinkedIn messages, or connection requests.
 
-The intial version will not automatically scrape or send connection requests.
+## Project files
 
-PROJECT STATUS
+- `main.py` — FastAPI routes, search filtering, parsing, and draft generation.
+- `models.py` and `database.py` — SQLite model and configurable database location.
+- `frontend/` — browser interface.
+- `tests/` — parser, storage, and API tests.
+- `Dockerfile` and `compose.yaml` — container build and persistent local deployment.
 
-Current stage: Initial backend setup
-
-☑️Create the project directory
-☑️Create and activate a python virtual environment
-☑️Install FastAPI
-☑️Create the initial FastAPI application
-☑️Run the development server and verify the application
-Define and validate founder data
-Implement founder-related API endpoints.
-Add Persistant database storage.
-Integrate an authorised professional-data API.
-Build the frontend.
-Add tests and containerized deployment.
-
-DEVELOPMENT PRINCIPLES
-
-•Build incrementally and explain the purpose of each component.
-•Keep business logic separate from API routes and database access.
-•Validate incoming data
-•Write tests for important functionality.
-•Keep API credentials and other secrets out of source control
-•Respect external providers' terms and applicable privacy requirements.
-
-LICENSE
+## License
 
 No license has been selected yet.

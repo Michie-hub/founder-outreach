@@ -1,0 +1,15 @@
+services:
+  founder-outreach:
+    build:
+      context: .
+      target: production
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      FOUNDER_OUTREACH_DB_PATH: /data/founders.db
+    volumes:
+      - founder_data:/data
+    restart: unless-stopped
+
+volumes:
+  founder_data:

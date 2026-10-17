@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f4f7" />
+    <title>Founder Orbit · Outreach workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/app.css" />
+    <script src="/assets/app.js?v=20261017-3" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Founder Orbit home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span>founder<span class="brand-light">orbit</span></span>
+        </a>
+        <div class="workspace-label">WORKSPACE</div>
+        <nav class="side-nav" aria-label="Main navigation">
+          <a class="nav-item active" href="#discover"><span class="nav-icon">⌕</span> Discover <span class="nav-count" id="nav-count">0</span></a>
+          <a class="nav-item" href="#prospects"><span class="nav-icon">◉</span> Prospect list</a>
+          <a class="nav-item" href="#pipeline"><span class="nav-icon">◌</span> How it works</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="api-card"><span class="status-dot" id="api-dot"></span><div><b id="api-label">Connecting to API</b><small>Local workspace</small></div></div>
+          <div class="sidebar-note">Your research stays in your local SQLite workspace.</div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumbs">Workspace <span>/</span> <b>Founder discovery</b></div>
+          <div class="topbar-right"><span class="local-badge"><span></span> PRIVATE WORKSPACE</span><div class="avatar">FO</div></div>
+        </header>
+
+        <section class="welcome" id="discover">
+          <div class="welcome-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span> FOUNDER SIGNAL LAB <span class="eyebrow-star">✳</span></div>
+            <h1>Find your next<br /><span>meaningful connection.</span></h1>
+            <p>Search public pages, surface the right people, and prepare thoughtful outreach. You stay in control at every step.</p>
+          </div>
+          <div class="welcome-stat"><div class="stat-icon">✳</div><div><b id="welcome-count">0</b><span>prospects in your orbit</span></div><span class="stat-spark">↗</span></div>
+        </section>
+
+        <section class="workbench-grid">
+          <article class="panel search-panel">
+            <div class="panel-heading"><div><div class="section-kicker">01 / SET YOUR TARGET</div><h2>Who are you looking for?</h2></div><span class="panel-symbol">⌕</span></div>
+            <form id="search-form">
+              <div class="field-grid">
+                <label>Industry or focus<input name="industry" value="software" placeholder="e.g. climate technology" required minlength="2" maxlength="100" /></label>
+                <label>Country or region<input name="country" value="Canada" placeholder="e.g. Canada" required minlength="2" maxlength="100" /></label>
+                <label>Founder role<input name="role" value="Founder" placeholder="Founder, CEO…" /></label>
+                <label>Pages to scan<select name="max_results"><option value="10">10 pages</option><option value="20" selected>20 pages</option><option value="30">30 pages</option><option value="50">50 pages</option></select></label>
+              </div>
+              <div class="search-footer"><span class="hint"><span>⌁</span> Results are starting points to review</span><button class="primary-button" id="search-button" type="submit"><span class="button-glyph">✳</span><span>Start discovery</span><span class="button-arrow">↗</span></button></div>
+            </form>
+            <div class="search-error" id="search-error" role="alert" hidden></div>
+          </article>
+
+          <article class="panel engine-panel" id="pipeline">
+            <div class="engine-head"><div><div class="section-kicker">THE DISCOVERY ENGINE</div><h2>Signals in motion</h2></div><span class="live-pill"><i></i><span id="engine-status">READY</span></span></div>
+            <div class="gear-stage" id="gear-stage" aria-label="Animated discovery gears">
+              <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+              <div class="gear gear-large" id="gear-main"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M51 5h18l3 10a47 47 0 0 1 9 4l9-5 13 13-5 9a47 47 0 0 1 4 9l10 3v18l-10 3a47 47 0 0 1-4 9l5 9-13 13-9-5a47 47 0 0 1-9 4l-3 10H51l-3-10a47 47 0 0 1-9-4l-9 5-13-13 5-9a47 47 0 0 1-4-9L8 63V45l10-3a47 47 0 0 1 4-9l-5-9 13-13 9 5a47 47 0 0 1 9-4z"/><circle cx="60" cy="54" r="20"/><circle class="gear-core" cx="60" cy="54" r="7"/></svg></div>
+              <div class="gear gear-small" id="gear-small"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M42 4h16l3 9a38 38 0 0 1 7 3l8-4 11 11-4 8a38 38 0 0 1 3 7l9 3v16l-9 3a38 38 0 0 1-3 7l4 8-11 11-8-4a38 38 0 0 1-7 3l-3 9H42l-3-9a38 38 0 0 1-7-3l-8 4-11-11 4-8a38 38 0 0 1-3-7l-9-3V41l9-3a38 38 0 0 1 3-7l-4-8 11-11 8 4a38 38 0 0 1 7-3z"/><circle cx="50" cy="49" r="15"/><circle class="gear-core" cx="50" cy="49" r="5"/></svg></div>
+              <div class="gear gear-tiny" id="gear-tiny"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M33 4h14l2 7 6 2 6-3 9 9-3 6 2 6 7 2v14l-7 2-2 6 3 6-9 9-6-3-6 2-2 7H33l-2-7-6-2-6 3-9-9 3-6-2-6-7-2V33l7-2 2-6-3-6 9-9 6 3 6-2z"/><circle cx="40" cy="39" r="12"/><circle class="gear-core" cx="40" cy="39" r="4"/></svg></div>
+              <div class="gear-center"><span class="center-star">✳</span><small>ORBIT</small></div>
+              <div class="gear-tag tag-search"><i></i> SEARCH</div><div class="gear-tag tag-signal"><i></i> SIGNAL</div><div class="gear-tag tag-people"><i></i> PEOPLE</div>
+            </div>
+            <div class="engine-caption"><span class="pulse-dot"></span><span id="engine-caption">Set a target to start the wheels turning</span></div>
+          </article>
+        </section>
+
+        <section class="execution-panel panel" aria-live="polite">
+          <div class="execution-title"><div><div class="section-kicker">02 / FLOW OF EXECUTION</div><h2>From search to shortlist</h2></div><span class="trace-label" id="trace-label">WAITING FOR A SEARCH</span></div>
+          <div class="flow-track" id="flow-track">
+            <div class="flow-step" data-step="search"><div class="flow-node">01</div><div><b>Search</b><small>Public pages</small></div></div><div class="flow-connector"></div>
+            <div class="flow-step" data-step="filter"><div class="flow-node">02</div><div><b>Filter</b><small>Founder signals</small></div></div><div class="flow-connector"></div>
+            <div class="flow-step" data-step="rank"><div class="flow-node">03</div><div><b>Rank</b><small>Best matches</small></div></div><div class="flow-connector"></div>
+            <div class="flow-step" data-step="extract"><div class="flow-node">04</div><div><b>Extract</b><small>Profile details</small></div></div><div class="flow-connector"></div>
+            <div class="flow-step" data-step="save"><div class="flow-node">05</div><div><b>Approve</b><small>Save selected</small></div></div>
+          </div>
+          <div class="trace-detail" id="trace-detail">Search results stay in this page until you approve them. Approved founders are saved for your outreach pipeline.</div>
+        </section>
+
+        <section class="prospects-section" id="prospects">
+          <div class="prospects-heading"><div><div class="section-kicker">03 / YOUR PIPELINE</div><h2>Prospects <span class="count-chip" id="prospect-count">0</span></h2></div><div class="list-controls"><label class="filter-label" for="review-filter">Show</label><select id="review-filter"><option value="all">Current search</option><option value="approved">Approved and saved</option></select><button class="icon-button" id="refresh-button" type="button" aria-label="Clear current search or refresh saved founders" title="Clear or refresh">↻</button></div></div>
+          <div id="prospect-list" class="prospect-list"><div class="empty-state"><div class="empty-illustration">✳</div><b>Your orbit is quiet for now</b><span>Run a search to bring founder prospects into view.</span></div></div>
+        </section>
+
+        <footer class="footer-note"><span>FOUNDER ORBIT</span><span>Search thoughtfully · Review carefully · Reach out personally</span><a href="/docs">API docs ↗</a></footer>
+      </main>
+    </div>
+  </body>
+</html>
